@@ -1,0 +1,3 @@
+record(ai, "$(user):test"){
+	field(DESC, "descr")
+}
