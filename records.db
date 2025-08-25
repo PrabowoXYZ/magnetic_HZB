@@ -1,5 +1,14 @@
-record($(user):mtr) {
-    field(DESC, "Motor controll")
-    field(OFF, )
+record(motor, "$(user):mtr") {
+    field(DESC, "Motor control")
+    field(EGU, ) #EGU of motor steps
+    field(OFF, ) # Offset
+    field(MRES, ) # associated with a single motor step = EGUS per rev / Steps per rev
+    field(VELO, ) #EGU/s (Or field S which is rev/s)
+    field(VAL, ) # User Desired Value (Or DVAL for dial desired value?)
+    # Stop motor if switch is hit
+}
 
+#Switches
+record(bi, "$(user):sw_end") {
+    
 }
