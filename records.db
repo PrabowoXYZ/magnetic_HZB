@@ -1,0 +1,5 @@
+record($(user):mtr) {
+    field(DESC, "Motor controll")
+    field(OFF, )
+
+}
