@@ -21,9 +21,14 @@ rasp_DBD += base.dbd
 
 # Include dbd files from all support applications:
 #rasp_DBD += xxx.dbd
+rasp_DBD += stream-base.dbd
+rasp_DBD += asyn.dbd
+rasp_DBD += drvAsynIPPort.dbd
 
 # Add all the support libraries needed by this IOC
 #rasp_LIBS += xxx
+rasp_LIBS += stream
+rasp_LIBS += asyn
 
 # rasp_registerRecordDeviceDriver.cpp derives from rasp.dbd
 rasp_SRCS += rasp_registerRecordDeviceDriver.cpp

@@ -13,6 +13,9 @@
 dbLoadDatabase "../../dbd/rasp.dbd"
 rasp_registerRecordDeviceDriver(pdbbase) 
 
+## Connect to the Pyhton server in the Pi
+drvAsynIPPortConfigure("L0", "172.30.83.222:10000")
+
 ## Load record instances
 dbLoadRecords("../../db/rasp.db","user=iocadm")
 

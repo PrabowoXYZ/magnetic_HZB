@@ -1,3 +1,19 @@
-record(ai, "$(user):test"){
-	field(DESC, "descr")
+record(ai, "HALL:FIELD") {
+	field(DTYP, "stream")
+	field(INP, "@rasp.proto readMag PORT=L0")
+}
+
+record(ai, "HALL:VOLT") {
+	field(DTYP, "stream")
+	field(INP, "@rasp.proto readVolt PORT=L0")
+}
+
+record(bi, "HALL:ONSTATUS") {
+	field(DTYP, "stream")
+	field(INP, "@rasp.proto readEnable PORT=L0")
+}
+
+record(bo, "HALL:ONCTRL") {
+	field(DTYP, "stream")
+	field(OUT, "@rasp.proto setEnable PORT=L0")
 }
