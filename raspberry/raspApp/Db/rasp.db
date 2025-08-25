@@ -1,19 +1,24 @@
-record(ai, "HALL:FIELD") {
+record(stringin, "$(user):IDN") {
 	field(DTYP, "stream")
-	field(INP, "@rasp.proto readMag PORT=L0")
+	field(INP, "@rasp.proto idn L0 PP")
 }
 
-record(ai, "HALL:VOLT") {
+record(ai, "$(user):FIELD") {
 	field(DTYP, "stream")
-	field(INP, "@rasp.proto readVolt PORT=L0")
+	field(INP, "@rasp.proto readMag L0 PP")
 }
 
-record(bi, "HALL:ONSTATUS") {
+record(ai, "$(user):VOLT") {
 	field(DTYP, "stream")
-	field(INP, "@rasp.proto readEnable PORT=L0")
+	field(INP, "@rasp.proto readVolt L0 PP")
 }
 
-record(bo, "HALL:ONCTRL") {
+record(bi, "$(user):ONSTATUS") {
 	field(DTYP, "stream")
-	field(OUT, "@rasp.proto setEnable PORT=L0")
+	field(INP, "@rasp.proto readEnable L0 PP")
+}
+
+record(bo, "$(user):ONCTRL") {
+	field(DTYP, "stream")
+	field(OUT, "@rasp.proto setEnable L0 PP")
 }

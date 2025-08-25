@@ -1,30 +1,34 @@
 # magnetics group :)
+
+InTerminator = CR LF;
+OutTerminator = CR LF;
+
 # identify the device
 idn {
-    out "*IDN?\n";
+    out "*IDN?";
     in "%s";
 }
 
 # magnetic field (gauss)
 readMag {
-    out "MGFLD?\n";
+    out "MGFLD?";
     in "MGFLD: %f";
 }
 
 # sensor voltage (volts)
 readVolt {
-    out "VOLT?\n";
+    out "VOLT?";
     in "VOLT: %f";
 }
 
 # read ON/OFF status
 readEnable {
-    out "ENABLE?\n";
+    out "ENABLE?";
     in "ON %d";
 }
 
 # write ON/OFF
 setEnable {
-    out "ON %d\n";
+    out "ON %d";
     in "ON %d";
 }

@@ -21,7 +21,7 @@
 # so it may ONLY contain definititions of paths to other support
 # modules, variable definitions that are used in module paths,
 # and include statements that pull in other RELEASE files.
-# Variables may be used before their values have been set.
+ Variables may be used before their values have been set.
 # Build variables that are NOT used in paths should be set in
 # the CONFIG_SITE file.
 
