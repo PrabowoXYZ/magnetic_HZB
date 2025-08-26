@@ -244,8 +244,8 @@
     <traces>
       <trace>
         <name>$(traces[0].y_pv)</name>
-        <x_pv>POS</x_pv>
-        <y_pv>MF</y_pv>
+        <x_pv>iodadm:POS</x_pv>
+        <y_pv>iocadm:FIELD</y_pv>
         <err_pv></err_pv>
         <axis>0</axis>
         <trace_type>1</trace_type>
@@ -371,8 +371,8 @@
     <traces>
       <trace>
         <name>$(traces[0].y_pv)</name>
-        <x_pv>CUR</x_pv>
-        <y_pv>MF</y_pv>
+        <x_pv>iocadm:CUR</x_pv>
+        <y_pv>iocadm:FIELD</y_pv>
         <err_pv></err_pv>
         <axis>0</axis>
         <trace_type>1</trace_type>
@@ -499,8 +499,8 @@
     <traces>
       <trace>
         <name>$(traces[0].y_pv)</name>
-        <x_pv>VOL</x_pv>
-        <y_pv>MF</y_pv>
+        <x_pv>iocadm:VOLT</x_pv>
+        <y_pv>iocadm:FIELD</y_pv>
         <err_pv></err_pv>
         <axis>0</axis>
         <trace_type>1</trace_type>
@@ -511,7 +511,7 @@
         <line_width>1</line_width>
         <line_style>0</line_style>
         <point_type>0</point_type>
-        <point_size>10</point_size>
+        <point_size>2</point_size>
         <visible>true</visible>
       </trace>
     </traces>
@@ -683,11 +683,20 @@
         <target>replace</target>
       </action>
     </actions>
+    <pv_name>iocadm:ONCTRL</pv_name>
     <text>START</text>
     <x>17</x>
     <y>374</y>
     <width>120</width>
     <height>26</height>
+    <rules>
+      <rule name="Set ON" prop_id="name" out_exp="false">
+        <exp bool_exp="new exp">
+          <value>1</value>
+        </exp>
+        <pv_name>iocadm:ONCTRL</pv_name>
+      </rule>
+    </rules>
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
@@ -699,15 +708,25 @@
         <target>replace</target>
       </action>
     </actions>
+    <pv_name>iocadm:ONCTRL</pv_name>
     <text>STOP</text>
     <x>17</x>
     <y>412</y>
     <width>120</width>
     <height>26</height>
+    <rules>
+      <rule name="Turn OFF" prop_id="name" out_exp="false">
+        <exp bool_exp="new exp">
+          <value>0</value>
+        </exp>
+        <pv_name>iocadm:ONCTRL</pv_name>
+      </rule>
+    </rules>
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="multi_state_led" version="2.0.0">
     <name>MGM_LED</name>
+    <pv_name>iocadm:ONCTRL</pv_name>
     <x>160</x>
     <y>340</y>
     <states>
@@ -769,9 +788,134 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update</name>
-    <pv_name>MG</pv_name>
+    <pv_name>iocadm:FIELD</pv_name>
     <x>69</x>
     <y>517</y>
     <height>19</height>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>POS_frame_3</name>
+    <x>1720</x>
+    <y>10</y>
+    <width>490</width>
+    <height>200</height>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>POS_frame_4</name>
+    <x>1720</x>
+    <y>230</y>
+    <width>490</width>
+    <height>320</height>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>POS_Update_1</name>
+    <pv_name>iocadm:FIELD</pv_name>
+    <x>1975</x>
+    <y>70</y>
+    <width>51</width>
+    <height>30</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>POS_text_5</name>
+    <text>FIeld over time</text>
+    <x>1850</x>
+    <y>30</y>
+    <width>280</width>
+    <height>30</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="20.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>POS_text_6</name>
+    <text>Magnetic FIeld Strength:</text>
+    <x>1820</x>
+    <y>70</y>
+    <width>210</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>POS_text_8</name>
+    <text>Magnetic field (T) as a function of time</text>
+    <x>1747</x>
+    <y>237</y>
+    <width>510</width>
+    <height>30</height>
+    <font>
+      <font name="Header 2" family="Liberation Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="stripchart" version="2.1.0">
+    <name>Strip Chart</name>
+    <x>1740</x>
+    <y>270</y>
+    <width>440</width>
+    <height>267</height>
+    <y_axes>
+      <y_axis>
+        <title>Y</title>
+        <autoscale>false</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>300.0</maximum>
+        <show_grid>false</show_grid>
+        <visible>true</visible>
+        <color>
+          <color name="Text" red="0" green="0" blue="0">
+          </color>
+        </color>
+      </y_axis>
+    </y_axes>
+    <traces>
+      <trace>
+        <name>$(traces[0].y_pv)</name>
+        <y_pv>iocadm:FIELD</y_pv>
+        <axis>0</axis>
+        <trace_type>2</trace_type>
+        <color>
+          <color red="0" green="0" blue="255">
+          </color>
+        </color>
+        <line_width>2</line_width>
+        <point_type>4</point_type>
+        <point_size>4</point_size>
+        <visible>true</visible>
+      </trace>
+    </traces>
+  </widget>
+  <widget type="radio" version="2.0.0">
+    <name>Radio Button</name>
+    <x>2240</x>
+    <y>140</y>
+    <width>0</width>
+    <height>0</height>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="stripchart" version="2.1.0">
+    <name>Strip Chart_1</name>
+    <x>1170</x>
+    <y>730</y>
+    <width>0</width>
+    <height>0</height>
   </widget>
 </display>
