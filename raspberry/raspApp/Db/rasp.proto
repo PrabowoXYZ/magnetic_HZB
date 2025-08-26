@@ -11,13 +11,13 @@ idn {
 # magnetic field (gauss)
 readMag {
     out "MGFLD?";
-    in "MGFLD %f";
+    in "MGFLD: %f";
 }
 
 # sensor voltage (volts)
 readVolt {
     out "VOLT?";
-    in "VOLT %f";
+    in "VOLT: %f";
 }
 
 # toggle on/off

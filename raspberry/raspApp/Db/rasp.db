@@ -6,19 +6,31 @@ record(stringin, "$(user):IDN") {
 
 record(ai, "$(user):FIELD") {
 	field(DTYP, "stream")
+	field(EGU, "gauss")
 	field(INP, "@rasp.proto readMag L0 PP")
-	field(SCAN, "Passive")
+	field(DISV, 0)
+	field(SDIS, "$(user):ONCTRL")
+	field(SCAN, "5 second")
 }
-
 record(ai, "$(user):VOLT") {
 	field(DTYP, "stream")
-	field(INP, "@rasp.proto readVolt L0 PP")
-	#field(SCAN, "1 second")
+	field(EGU, "volt")
+ 	field(INP, "@rasp.proto readVolt L0 PP")
+	field(DISV, 0)
+	field(SDIS, "$(user):ONCTRL")
+	field(SCAN, "5 second")
 }
 
+# SWITCH 
 record(bo, "$(user):ONCTRL") {
 	field(DTYP, "stream")
 	field(OUT, "@rasp.proto on L0 PP")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
+	field(DOL, "$(user):fo1")
+}
+record(fanout, "$(user):fo1") {
+	field(SELM, "All")
+	field(LNK0, "$(user):FIELD")
+	field(LNK1, "$(user):VOLT")
 }
