@@ -11,7 +11,7 @@
 epicsEnvSet "STREAM_PROTOCOL_PATH" "$(TOP)/db"
 
 ## Register all support components
-dbLoadDatabase "../../dbd/rasp.dbd"
+dbLoadDatabase("../../dbd/rasp.dbd")
 rasp_registerRecordDeviceDriver(pdbbase) 
 
 ## Connect to the Pyhton server in the Pi
