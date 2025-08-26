@@ -36,10 +36,6 @@
       <name>POS_frame_1</name>
       <width>490</width>
       <height>200</height>
-      <line_color>
-        <color name="MAJOR" red="255" green="0" blue="0">
-        </color>
-      </line_color>
       <background_color>
         <color name="Read_Background" red="240" green="240" blue="240">
         </color>
@@ -77,7 +73,7 @@
     <x>705</x>
     <y>230</y>
     <width>490</width>
-    <height>323</height>
+    <height>320</height>
     <line_color>
       <color name="MAJOR" red="255" green="0" blue="0">
       </color>
@@ -107,7 +103,7 @@
     <x>1210</x>
     <y>230</y>
     <width>490</width>
-    <height>323</height>
+    <height>320</height>
     <line_color>
       <color name="On" red="0" green="255" blue="0">
       </color>
@@ -117,8 +113,23 @@
       </color>
     </background_color>
   </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>MOT_frame</name>
+    <x>10</x>
+    <y>50</y>
+    <width>180</width>
+    <height>120</height>
+    <line_color>
+      <color name="Off" red="60" green="100" blue="60">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
   <widget type="action_button" version="3.0.0">
-    <name>START</name>
+    <name>MOT_START</name>
     <actions>
       <action type="open_display">
         <description>Introduction</description>
@@ -128,13 +139,13 @@
     </actions>
     <text>START</text>
     <x>17</x>
-    <y>80</y>
+    <y>94</y>
     <width>120</width>
     <height>26</height>
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>STOP</name>
+    <name>MOT_STOP</name>
     <actions>
       <action type="open_display">
         <description>Properties</description>
@@ -144,10 +155,44 @@
     </actions>
     <text>STOP</text>
     <x>17</x>
-    <y>120</y>
+    <y>132</y>
     <width>120</width>
     <height>26</height>
     <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="multi_state_led" version="2.0.0">
+    <name>MOT_LED</name>
+    <x>160</x>
+    <y>60</y>
+    <states>
+      <state>
+        <value>0</value>
+        <label>State 1</label>
+        <color>
+          <color name="Off" red="60" green="100" blue="60">
+          </color>
+        </color>
+      </state>
+      <state>
+        <value>1</value>
+        <label>State 2</label>
+        <color>
+          <color name="On" red="0" green="255" blue="0">
+          </color>
+        </color>
+      </state>
+    </states>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>MOT_text</name>
+    <text>Motor</text>
+    <x>17</x>
+    <y>60</y>
+    <width>83</width>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
   </widget>
   <widget type="xyplot" version="3.0.0">
     <name>POS_Plot</name>
@@ -531,5 +576,202 @@
     <x>1470</x>
     <y>100</y>
     <height>30</height>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>PSU_frame</name>
+    <x>10</x>
+    <y>190</y>
+    <width>180</width>
+    <height>120</height>
+    <line_color>
+      <color name="Off" red="60" green="100" blue="60">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>PSU_START</name>
+    <actions>
+      <action type="open_display">
+        <description>Introduction</description>
+        <file>02_intro.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>START</text>
+    <x>17</x>
+    <y>234</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>PSU_STOP</name>
+    <actions>
+      <action type="open_display">
+        <description>Properties</description>
+        <file>03_properties.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>STOP</text>
+    <x>17</x>
+    <y>272</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="multi_state_led" version="2.0.0">
+    <name>PSU_LED</name>
+    <x>160</x>
+    <y>200</y>
+    <states>
+      <state>
+        <value>0</value>
+        <label>State 1</label>
+        <color>
+          <color name="Off" red="60" green="100" blue="60">
+          </color>
+        </color>
+      </state>
+      <state>
+        <value>1</value>
+        <label>State 2</label>
+        <color>
+          <color name="On" red="0" green="255" blue="0">
+          </color>
+        </color>
+      </state>
+    </states>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>PSU_text</name>
+    <text>Power supply</text>
+    <x>17</x>
+    <y>200</y>
+    <width>223</width>
+    <height>34</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>MOT_frame_4</name>
+    <x>10</x>
+    <y>330</y>
+    <width>180</width>
+    <height>120</height>
+    <line_color>
+      <color name="Off" red="60" green="100" blue="60">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>MGM_START</name>
+    <actions>
+      <action type="open_display">
+        <description>Introduction</description>
+        <file>02_intro.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>START</text>
+    <x>17</x>
+    <y>374</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>MGM_STOP</name>
+    <actions>
+      <action type="open_display">
+        <description>Properties</description>
+        <file>03_properties.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>STOP</text>
+    <x>17</x>
+    <y>412</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="multi_state_led" version="2.0.0">
+    <name>MGM_LED</name>
+    <x>160</x>
+    <y>340</y>
+    <states>
+      <state>
+        <value>0</value>
+        <label>State 1</label>
+        <color>
+          <color name="Off" red="60" green="100" blue="60">
+          </color>
+        </color>
+      </state>
+      <state>
+        <value>1</value>
+        <label>State 2</label>
+        <color>
+          <color name="On" red="0" green="255" blue="0">
+          </color>
+        </color>
+      </state>
+    </states>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>MGM_text</name>
+    <text>Magnetometer</text>
+    <x>17</x>
+    <y>340</y>
+    <width>133</width>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_1</name>
+    <x>10</x>
+    <y>460</y>
+    <width>180</width>
+    <height>90</height>
+    <line_color>
+      <color name="Button_Background" red="210" green="210" blue="210">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>Actual value of Magnetic Field is</text>
+    <x>30</x>
+    <y>468</y>
+    <width>180</width>
+    <height>73</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>MG</pv_name>
+    <x>69</x>
+    <y>517</y>
+    <height>19</height>
   </widget>
 </display>
