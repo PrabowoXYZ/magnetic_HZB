@@ -3,6 +3,13 @@
   <name>Main</name>
   <width>1010</width>
   <height>570</height>
+  <actions>
+    <action type="write_pv">
+      <description>Écrire PV</description>
+      <pv_name>$(iocadm:ONCTRL)</pv_name>
+      <value>1</value>
+    </action>
+  </actions>
   <grid_color>
     <color red="127" green="127" blue="127">
     </color>
@@ -128,65 +135,10 @@
       </color>
     </background_color>
   </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>MOT_START</name>
-    <actions>
-      <action type="open_display">
-        <description>Introduction</description>
-        <file>02_intro.bob</file>
-        <target>replace</target>
-      </action>
-    </actions>
-    <text>START</text>
-    <x>17</x>
-    <y>94</y>
-    <width>120</width>
-    <height>26</height>
-    <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>MOT_STOP</name>
-    <actions>
-      <action type="open_display">
-        <description>Properties</description>
-        <file>03_properties.bob</file>
-        <target>replace</target>
-      </action>
-    </actions>
-    <text>STOP</text>
-    <x>17</x>
-    <y>132</y>
-    <width>120</width>
-    <height>26</height>
-    <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="multi_state_led" version="2.0.0">
-    <name>MOT_LED</name>
-    <x>160</x>
-    <y>60</y>
-    <states>
-      <state>
-        <value>0</value>
-        <label>State 1</label>
-        <color>
-          <color name="Off" red="60" green="100" blue="60">
-          </color>
-        </color>
-      </state>
-      <state>
-        <value>1</value>
-        <label>State 2</label>
-        <color>
-          <color name="On" red="0" green="255" blue="0">
-          </color>
-        </color>
-      </state>
-    </states>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>MOT_text</name>
     <text>Motor</text>
-    <x>17</x>
+    <x>50</x>
     <y>60</y>
     <width>83</width>
     <font>
@@ -219,7 +171,7 @@
     </x_axis>
     <y_axes>
       <y_axis>
-        <title>Magnetic FIeld (T)</title>
+        <title>Magnetic Field (G)</title>
         <autoscale>false</autoscale>
         <log_scale>false</log_scale>
         <minimum>0.0</minimum>
@@ -311,7 +263,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>POS_text_4</name>
-    <text>Magnetic field (T) as a function of position (cm)</text>
+    <text>Magnetic field (G) as a function of position (mm)</text>
     <x>227</x>
     <y>237</y>
     <width>510</width>
@@ -332,7 +284,7 @@
       <autoscale>false</autoscale>
       <log_scale>false</log_scale>
       <minimum>0.0</minimum>
-      <maximum>100.0</maximum>
+      <maximum>10.0</maximum>
       <show_grid>false</show_grid>
       <title_font>
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -346,7 +298,7 @@
     </x_axis>
     <y_axes>
       <y_axis>
-        <title>Magnetic FIeld (T)</title>
+        <title>Magnetic Field (G)</title>
         <autoscale>false</autoscale>
         <log_scale>false</log_scale>
         <minimum>0.0</minimum>
@@ -371,7 +323,7 @@
     <traces>
       <trace>
         <name>$(traces[0].y_pv)</name>
-        <x_pv>iocadm:CUR</x_pv>
+        <x_pv>icoadm:MRI</x_pv>
         <y_pv>iocadm:FIELD</y_pv>
         <err_pv></err_pv>
         <axis>0</axis>
@@ -390,15 +342,18 @@
   </widget>
   <widget type="scaledslider" version="2.0.0">
     <name>CUR_Slider</name>
-    <pv_name>CUR</pv_name>
+    <pv_name>icoadm:MRI</pv_name>
     <x>775</x>
     <y>156</y>
     <width>350</width>
     <height>10</height>
+    <level_lolo>100.0</level_lolo>
+    <maximum>10.0</maximum>
+    <limits_from_pv>false</limits_from_pv>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>CUR_Update</name>
-    <pv_name>CUR</pv_name>
+    <pv_name>icoadm:MRI</pv_name>
     <x>995</x>
     <y>80</y>
     <width>51</width>
@@ -406,7 +361,7 @@
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>CUR_Entry</name>
-    <pv_name>CUR</pv_name>
+    <pv_name>icoadm:MRI</pv_name>
     <x>965</x>
     <y>100</y>
     <height>30</height>
@@ -439,7 +394,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>CUR_text_4</name>
-    <text>Magnetic field (T) as a function of current (A)</text>
+    <text>Magnetic field (G) as a function of current (A)</text>
     <x>732</x>
     <y>237</y>
     <width>510</width>
@@ -474,7 +429,7 @@
     </x_axis>
     <y_axes>
       <y_axis>
-        <title>Magnetic FIeld (T)</title>
+        <title>Magnetic FIeld (G)</title>
         <autoscale>false</autoscale>
         <log_scale>false</log_scale>
         <minimum>0.0</minimum>
@@ -516,51 +471,9 @@
       </trace>
     </traces>
   </widget>
-  <widget type="scaledslider" version="2.0.0">
-    <name>VOL_Slider</name>
-    <pv_name>VOL</pv_name>
-    <x>1280</x>
-    <y>156</y>
-    <width>350</width>
-    <height>10</height>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>VOL_Update</name>
-    <pv_name>VOL</pv_name>
-    <x>1500</x>
-    <y>80</y>
-    <width>51</width>
-    <height>30</height>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>VOL_text_1</name>
-    <text>Voltage settigs (V)</text>
-    <x>1360</x>
-    <y>40</y>
-    <width>280</width>
-    <height>30</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="20.0">
-      </font>
-    </font>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>VOL_text_2</name>
-    <text>Actual voltage is :</text>
-    <x>1360</x>
-    <y>80</y>
-    <width>210</width>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>VOL_text_3</name>
-    <text>New voltage:</text>
-    <x>1360</x>
-    <y>110</y>
-    <width>110</width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>VOL_text_4</name>
-    <text>Magnetic field (T) as a function of voltage (V)</text>
+    <text>Magnetic field (G) as a function of voltage (V)</text>
     <x>1237</x>
     <y>237</y>
     <width>510</width>
@@ -569,13 +482,6 @@
       <font name="Header 2" family="Liberation Sans" style="BOLD" size="18.0">
       </font>
     </font>
-  </widget>
-  <widget type="textentry" version="3.0.0">
-    <name>VOL_Entry</name>
-    <pv_name>VOL</pv_name>
-    <x>1470</x>
-    <y>100</y>
-    <height>30</height>
   </widget>
   <widget type="rectangle" version="2.0.0">
     <name>PSU_frame</name>
@@ -592,65 +498,10 @@
       </color>
     </background_color>
   </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>PSU_START</name>
-    <actions>
-      <action type="open_display">
-        <description>Introduction</description>
-        <file>02_intro.bob</file>
-        <target>replace</target>
-      </action>
-    </actions>
-    <text>START</text>
-    <x>17</x>
-    <y>234</y>
-    <width>120</width>
-    <height>26</height>
-    <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>PSU_STOP</name>
-    <actions>
-      <action type="open_display">
-        <description>Properties</description>
-        <file>03_properties.bob</file>
-        <target>replace</target>
-      </action>
-    </actions>
-    <text>STOP</text>
-    <x>17</x>
-    <y>272</y>
-    <width>120</width>
-    <height>26</height>
-    <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="multi_state_led" version="2.0.0">
-    <name>PSU_LED</name>
-    <x>160</x>
-    <y>200</y>
-    <states>
-      <state>
-        <value>0</value>
-        <label>State 1</label>
-        <color>
-          <color name="Off" red="60" green="100" blue="60">
-          </color>
-        </color>
-      </state>
-      <state>
-        <value>1</value>
-        <label>State 2</label>
-        <color>
-          <color name="On" red="0" green="255" blue="0">
-          </color>
-        </color>
-      </state>
-    </states>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>PSU_text</name>
     <text>Power supply</text>
-    <x>17</x>
+    <x>37</x>
     <y>200</y>
     <width>223</width>
     <height>34</height>
@@ -674,84 +525,10 @@
       </color>
     </background_color>
   </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>MGM_START</name>
-    <actions>
-      <action type="open_display">
-        <description>Introduction</description>
-        <file>02_intro.bob</file>
-        <target>replace</target>
-      </action>
-    </actions>
-    <pv_name>iocadm:ONCTRL</pv_name>
-    <text>START</text>
-    <x>17</x>
-    <y>374</y>
-    <width>120</width>
-    <height>26</height>
-    <rules>
-      <rule name="Set ON" prop_id="name" out_exp="false">
-        <exp bool_exp="new exp">
-          <value>1</value>
-        </exp>
-        <pv_name>iocadm:ONCTRL</pv_name>
-      </rule>
-    </rules>
-    <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>MGM_STOP</name>
-    <actions>
-      <action type="open_display">
-        <description>Properties</description>
-        <file>03_properties.bob</file>
-        <target>replace</target>
-      </action>
-    </actions>
-    <pv_name>iocadm:ONCTRL</pv_name>
-    <text>STOP</text>
-    <x>17</x>
-    <y>412</y>
-    <width>120</width>
-    <height>26</height>
-    <rules>
-      <rule name="Turn OFF" prop_id="name" out_exp="false">
-        <exp bool_exp="new exp">
-          <value>0</value>
-        </exp>
-        <pv_name>iocadm:ONCTRL</pv_name>
-      </rule>
-    </rules>
-    <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="multi_state_led" version="2.0.0">
-    <name>MGM_LED</name>
-    <pv_name>iocadm:ONCTRL</pv_name>
-    <x>160</x>
-    <y>340</y>
-    <states>
-      <state>
-        <value>0</value>
-        <label>State 1</label>
-        <color>
-          <color name="Off" red="60" green="100" blue="60">
-          </color>
-        </color>
-      </state>
-      <state>
-        <value>1</value>
-        <label>State 2</label>
-        <color>
-          <color name="On" red="0" green="255" blue="0">
-          </color>
-        </color>
-      </state>
-    </states>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>MGM_text</name>
     <text>Magnetometer</text>
-    <x>17</x>
+    <x>37</x>
     <y>340</y>
     <width>133</width>
     <font>
@@ -760,13 +537,13 @@
     </font>
   </widget>
   <widget type="rectangle" version="2.0.0">
-    <name>Rectangle_1</name>
+    <name>MG_frame</name>
     <x>10</x>
     <y>460</y>
     <width>180</width>
     <height>90</height>
     <line_color>
-      <color name="Button_Background" red="210" green="210" blue="210">
+      <color name="INVALID" red="255" green="0" blue="255">
       </color>
     </line_color>
     <background_color>
@@ -775,7 +552,7 @@
     </background_color>
   </widget>
   <widget type="label" version="2.0.0">
-    <name>Label_1</name>
+    <name>MG_text1</name>
     <text>Actual value of Magnetic Field is</text>
     <x>30</x>
     <y>468</y>
@@ -787,26 +564,11 @@
     </font>
   </widget>
   <widget type="textupdate" version="2.0.0">
-    <name>Text Update</name>
+    <name>MG_Update</name>
     <pv_name>iocadm:FIELD</pv_name>
     <x>69</x>
     <y>517</y>
     <height>19</height>
-  </widget>
-  <widget type="rectangle" version="2.0.0">
-    <name>POS_frame_3</name>
-    <x>1720</x>
-    <y>10</y>
-    <width>490</width>
-    <height>200</height>
-    <line_color>
-      <color name="INVALID" red="255" green="0" blue="255">
-      </color>
-    </line_color>
-    <background_color>
-      <color name="Read_Background" red="240" green="240" blue="240">
-      </color>
-    </background_color>
   </widget>
   <widget type="rectangle" version="2.0.0">
     <name>POS_frame_4</name>
@@ -823,36 +585,9 @@
       </color>
     </background_color>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>POS_Update_1</name>
-    <pv_name>iocadm:FIELD</pv_name>
-    <x>1975</x>
-    <y>70</y>
-    <width>51</width>
-    <height>30</height>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>POS_text_5</name>
-    <text>FIeld over time</text>
-    <x>1850</x>
-    <y>30</y>
-    <width>280</width>
-    <height>30</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="20.0">
-      </font>
-    </font>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>POS_text_6</name>
-    <text>Magnetic FIeld Strength:</text>
-    <x>1820</x>
-    <y>70</y>
-    <width>210</width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>POS_text_8</name>
-    <text>Magnetic field (T) as a function of time</text>
+    <text>Magnetic field (G) as a function of time</text>
     <x>1747</x>
     <y>237</y>
     <width>510</width>
@@ -900,22 +635,90 @@
       </trace>
     </traces>
   </widget>
-  <widget type="radio" version="2.0.0">
-    <name>Radio Button</name>
-    <x>2240</x>
-    <y>140</y>
-    <width>0</width>
-    <height>0</height>
-    <items>
-      <item>Item 1</item>
-      <item>Item 2</item>
-    </items>
-  </widget>
   <widget type="stripchart" version="2.1.0">
     <name>Strip Chart_1</name>
     <x>1170</x>
     <y>730</y>
-    <width>0</width>
-    <height>0</height>
+    <width>1</width>
+    <height>1</height>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Boolean Button</name>
+    <pv_name>iocadm:ONCTRL</pv_name>
+    <x>40</x>
+    <y>380</y>
+    <width>110</width>
+    <height>40</height>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Boolean Button_1</name>
+    <pv_name>iocadm:ONCTRL</pv_name>
+    <x>37</x>
+    <y>234</y>
+    <width>110</width>
+    <height>40</height>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Boolean Button_2</name>
+    <pv_name>iocadm:ONCTRL</pv_name>
+    <x>37</x>
+    <y>100</y>
+    <width>110</width>
+    <height>40</height>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>MG_frame_1</name>
+    <x>1720</x>
+    <y>10</y>
+    <width>490</width>
+    <height>200</height>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>MG_text1_2</name>
+    <text>Actual value of Magnetic Field is</text>
+    <x>1730</x>
+    <y>90</y>
+    <width>330</width>
+    <height>19</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>MG_Update_2</name>
+    <pv_name>iocadm:FIELD</pv_name>
+    <x>2001</x>
+    <y>90</y>
+    <width>160</width>
+    <height>19</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>MG_text1_3</name>
+    <text>Actual value of Voltage is</text>
+    <x>1260</x>
+    <y>90</y>
+    <width>280</width>
+    <height>74</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>MG_Update_3</name>
+    <pv_name>iocadm:FIELD</pv_name>
+    <x>1483</x>
+    <y>90</y>
+    <width>160</width>
+    <height>19</height>
   </widget>
 </display>
