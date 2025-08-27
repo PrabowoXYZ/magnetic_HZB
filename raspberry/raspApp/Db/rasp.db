@@ -1,36 +1,45 @@
-record(stringin, "$(user):IDN") {
+record(stringin, "G3:GM.rdIdn") {
 	field(DTYP, "stream")
 	field(INP, "@rasp.proto idn L0 PP")
 	field(PINI, "YES")
 	}
 
-record(ai, "$(user):FIELD") {
+record(ai, "G3:GM.rdBfield") {
 	field(DTYP, "stream")
 	field(EGU, "gauss")
 	field(INP, "@rasp.proto readMag L0 PP")
 	field(DISV, 0)
 	field(SDIS, "$(user):ONCTRL")
-	field(SCAN, "5 second")
+	field(SCAN, "1 second")
 }
-record(ai, "$(user):VOLT") {
+
+record(ai, "G3:GM.rdVolt") {
 	field(DTYP, "stream")
 	field(EGU, "volt")
  	field(INP, "@rasp.proto readVolt L0 PP")
 	field(DISV, 0)
 	field(SDIS, "$(user):ONCTRL")
-	field(SCAN, "5 second")
+	field(SCAN, "1 second")
 }
 
-# SWITCH 
-record(bo, "$(user):ONCTRL") {
+record(bi, "G3:GM.rdStatus") {
+	field(INP, "$(user):ONCTRL CP")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}
+
+record(bo, "G3:GM.wrOnctrl") {
 	field(DTYP, "stream")
 	field(OUT, "@rasp.proto on L0 PP")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
 	field(DOL, "$(user):fo1")
 }
-record(fanout, "$(user):fo1") {
+
+# SWITCH 
+record(fanout, "$(user):FO1") {
 	field(SELM, "All")
 	field(LNK0, "$(user):FIELD")
 	field(LNK1, "$(user):VOLT")
+	field(LNK2, "$(user):STATUS")
 }

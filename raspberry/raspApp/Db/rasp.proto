@@ -20,6 +20,12 @@ readVolt {
     in "VOLT: %f";
 }
 
+# check sensor status
+checkStatus {
+    out "ENABLE?";
+    in "%[^\x0a]";
+}
+
 # toggle on/off
 on {
     out "ON %d";
