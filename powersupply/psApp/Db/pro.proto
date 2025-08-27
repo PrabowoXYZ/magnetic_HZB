@@ -1,0 +1,41 @@
+Terminator = "\r";
+
+setMON{
+    out "MON"; in "%d"
+}
+
+setMOFF{
+    out "MOFF"; in "%d"
+}
+
+setMWI {
+    out "MWI:%f"; in "%f"
+}
+
+setMWSR{
+    out "MWSR:%f"; in "%f"
+}
+
+setMRM{
+    out "MRM:%f"; in "%f"
+}
+
+getMRI{
+    out "MRI"; in "#MRI:%f";
+}
+
+getMRSR{
+    out "MRSR"; in "#MRSR:%f";
+}
+
+getMRT{
+    out "MRT"; in "#MRT:%f";
+}
+
+getMRTS{
+    out "MRTS"; in "#MRTS:%f";
+}
+
+getMRV{
+    out "MRV"; in "#MRV:%f";
+}
