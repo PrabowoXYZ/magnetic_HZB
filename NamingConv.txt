@@ -1,12 +1,12 @@
-G3:Device(MT = Motor, PS = PowerSupply, GM = Gaussmeter).record
+G3:Device(MT = Motor, PS = PowerSupply, GM = Gaussmeter):record
 
 read: rdDevice
 write: wrDevice
 
-G3:GM:rdBField - read magn field
-G3:GM:rdVolt   - read voltage
-G3:GM:rdIdn    - read identity
-G3:GM:rdStatus - read status
-G3:GM:wrOnctrl - turn on or off
+G3:GM.rdBField - read magn field
+G3:GM.rdVolt   - read voltage
+G3:GM.rdIdn    - read identity
+G3:GM.rdStatus - read status
+G3:GM.wrOnctrl - turn on or off
 
 
