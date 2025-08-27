@@ -9,7 +9,7 @@ Overleaf link https://www.overleaf.com/9854485436kcbbsdwrgxdm#1b5e17
 Bessy Naming convention: https://wiki-csr.bessy.de/Controls/SignalNamingConv
 
 
-G3:PS:rdCur
+G3:PS:rdCur//
 G3:PS:rdCurSlewRate
 G3:PS:rdHeatSinkTmp
 G3:PS:rdHeatShuntTmp
