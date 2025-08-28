@@ -1,45 +1,63 @@
-record(stringin, "G3:GM.rdIdn") {
+record(stringin, "G3:GM:rdIdn") {
 	field(DTYP, "stream")
 	field(INP, "@rasp.proto idn L0 PP")
 	field(PINI, "YES")
 	}
 
-record(ai, "G3:GM.rdBfield") {
+record(ai, "G3:GM:rdBfield") {
 	field(DTYP, "stream")
 	field(EGU, "gauss")
 	field(INP, "@rasp.proto readMag L0 PP")
-	field(DISV, 0)
-	field(SDIS, "$(user):ONCTRL")
 	field(SCAN, "1 second")
+	field(DISV, "1")
+	field(SDIS, "G3:GM:wrMctrl.VAL CP")
 }
 
-record(ai, "G3:GM.rdVolt") {
+record(ai, "G3:GM:rdVolt") {
 	field(DTYP, "stream")
 	field(EGU, "volt")
  	field(INP, "@rasp.proto readVolt L0 PP")
-	field(DISV, 0)
-	field(SDIS, "$(user):ONCTRL")
 	field(SCAN, "1 second")
+	field(DISV, "1")
+	field(SDIS, "G3:GM:wrMctrl.VAL CP")
 }
 
-record(bi, "G3:GM.rdStatus") {
-	field(INP, "$(user):ONCTRL CP")
+record(bi, "G3:GM:rdStatus") {
+	field(INP, "G3:GM:wrOnctrl CP")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
 }
 
-record(bo, "G3:GM.wrOnctrl") {
+record(bo, "G3:GM:wrOnctrl") {
 	field(DTYP, "stream")
 	field(OUT, "@rasp.proto on L0 PP")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
-	field(DOL, "$(user):fo1")
+	field(DOL, "G3:GM:FO1")
+	field(FLNK, "G3:GM:wrMctrlR.PROC")
+}
+
+record(bo, "G3:GM:wrMctrl") {
+	field(ZNAM, "ALLOW")
+	field(ONAM, "BLOCK")
+	field(DOL, "0")
+	field(PINI, "YES")
+	field(DISV, "0")
+	field(SDIS, "G3:GM:rdStatus.VAL CP")
+}
+
+record(calcout, "G3:GM:wrMctrlR") {
+	field(INPA, "G3:GM:rdStatus.VAL CP")
+	field(CALC, "A==0?0:B")
+	field(INPB, "G3:GM:wrMctrl.VAL")
+	field(OUT, "G3:GM:wrMctrl.VAL PP")
+	field(OOPT, "On Change")
 }
 
 # SWITCH 
-record(fanout, "$(user):FO1") {
+record(fanout, "G3:GM:FO1") {
 	field(SELM, "All")
-	field(LNK0, "$(user):FIELD")
-	field(LNK1, "$(user):VOLT")
-	field(LNK2, "$(user):STATUS")
+	field(LNK0, "G3:GM:rdBfield")
+	field(LNK1, "G3:GM:rdVolt")
+	field(LNK2, "G3:GM:rdStatus")
 }

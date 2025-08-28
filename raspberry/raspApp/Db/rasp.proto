@@ -5,7 +5,7 @@ Terminator = CR LF;
 # identify the device
 idn {
     out "*IDN?";
-    in "%[^\x0a]";
+    in "%[^\r]";
 }
 
 # magnetic field (gauss)
