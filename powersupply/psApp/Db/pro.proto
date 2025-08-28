@@ -39,3 +39,9 @@ getMRTS{
 getMRV{
     out "MRV"; in "#MRV:%f";
 }
+
+# 0 -> "MOFF", 1 -> "MON"
+setMPWR {
+    out "%{MOFF|MON}";
+    in  "%d";
+}

@@ -1,0 +1,138 @@
+record(bo, "$(user):PS:MON")
+{
+    field(DESC, "Turn output off/on")
+    field(DTYP, "stream")
+    field(OUT,  "@pro.proto setMON DEV1")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+
+record(bo, "$(user):PS:MOFF")
+{
+    field(DESC, "Turn output off/on")
+    field(DTYP, "stream")
+    field(OUT,  "@pro.proto setMOFF DEV1")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+
+
+record(ao, "$(user):PS:MWI")
+{
+    field(DESC, "Set +0.5V output current")
+    field(DTYP, "stream")
+    field(OUT,  "@pro.proto setMWI DEV1")
+    field(EGU,  "Amps")
+    field(LOPR, "0")
+    field(HOPR, "5")
+    field(EGUL, "0")
+    field(EGUF, "5")
+    field(DRVL, "0")
+    field(DRVH, "5")
+}
+
+record(ao, "$(user):PS:MRM")
+{
+    field(DESC, "Set +0.5V output current")
+    field(DTYP, "stream")
+    field(OUT,  "@pro.proto setMRM DEV1")
+    field(EGU,  "Amps")
+    field(LOPR, "0")
+    field(HOPR, "5")
+    field(EGUL, "0")
+    field(EGUF, "5")
+    field(DRVL, "0")
+    field(DRVH, "5")
+}
+
+
+record(ai, "$(user):PS:MRI")
+{
+    field(DESC, "Get output current")
+    field(DTYP, "stream")
+    field(INP,  "@pro.proto getMRI DEV1")
+    field(EGU,  "Ampere")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+record(ai, "$(user):PS:MRSR")
+{
+    field(DESC, "Get slew rate")
+    field(DTYP, "stream")
+    field(INP,  "@pro.proto getMRSR DEV1")
+    field(EGU,  "Slew Rate")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+record(ai, "$(user):PS:MRT")
+{
+    field(DESC, "Get Heatsick temperature")
+    field(DTYP, "stream")
+    field(INP,  "@pro.proto getMRT DEV1")
+    field(EGU,  "Celsius")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+record(ai, "$(user):PS:MRTS")
+{
+    field(DESC, "Get temperature shunt")
+    field(DTYP, "stream")
+    field(INP,  "@pro.proto getMRTS DEV1")
+    field(EGU,  "Celsius")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+
+record(ai, "$(user):PS:MRV")
+{
+    field(DESC, "Get temperature shunt")
+    field(DTYP, "stream")
+    field(INP,  "@pro.proto getMRV DEV1")
+    field(EGU,  "Celsius")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+record(ao, "$(user):PS:MRM")
+{
+    field(DESC, "Set Slew Rate")
+    field(DTYP, "stream")
+    field(OUT,  "@pro.proto setMRM DEV1")
+    field(EGU,  "Slew Rate")
+}
+
+record (calcout, "$(user):PS:BOTTON")
+{
+    field(DESC, "ON/OFF")
+    field(EGU, "BOOL")
+    field(INPA, "$(user):PS:MON.VAL PP NMS")
+    field(INPB, "$(user):PS:MOFF.VAL PP NMS")
+    field(CALC, "A && (!B)")
+}
+
+
+record(calcout, "$(user):PS:DONE")
+{
+    field(DESC, "DONE")
+    field(EGU,  "BOOL")
+    field(SCAN, "Passive")  # importante
+
+    # CP = processa quando arriva un monitor dal PV sorgente
+    field(INPA, "$(user):PS:MWI.VAL CP NMS")  # setpoint
+    field(INPB, "$(user):PS:MRI.VAL CP NMS")  # misura
+    field(INPC, "$(user):PS:MRI.VAL CP NMS")  # (se ti serve la stessa o un'altra grandezza)
+
+    field(CALC, "(A=B) && ((-20<C&C<20)) && ((-10<B)&&(B<10))")
+
+    # Se vuoi che DONE scriva il risultato su un PV:
+    field(OUT,  "$(user):PS:DONE_VAL PP")
+    field(DOPT, "Use CALC")
+    field(OOPT, "Every Time")
+
+    # opzionale: calcola anche all’avvio IOC
+    field(PINI, "YES")
+}

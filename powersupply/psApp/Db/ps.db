@@ -1,52 +1,56 @@
-record(bo, "$(user):PS:MON")
+record(bo, "G3:PS:cmdPwrOn")
 {
     field(DESC, "Turn output off/on")
     field(DTYP, "stream")
     field(OUT,  "@pro.proto setMON DEV1")
     field(ZNAM, "Off")
     field(ONAM, "On")
+    field(SCAN, "Passive")
+    field(FLNK, "G3:PS:botton")     # dopo ON, ricalcola botton
 }
 
-record(bo, "$(user):PS:MOFF")
+record(bo, "G3:PS:cmdPwrOff")
 {
     field(DESC, "Turn output off/on")
     field(DTYP, "stream")
     field(OUT,  "@pro.proto setMOFF DEV1")
     field(ZNAM, "Off")
     field(ONAM, "On")
+    field(SCAN, "Passive")
+    field(FLNK, "G3:PS:botton")     # dopo OFF, ricalcola botton
 }
 
 
-record(ao, "$(user):PS:MWI")
+record(ao, "G3:PS:wrCurNoRamp")
 {
-    field(DESC, "Set +0.5V output current")
+    field(DESC, "Set output current")
     field(DTYP, "stream")
     field(OUT,  "@pro.proto setMWI DEV1")
     field(EGU,  "Amps")
     field(LOPR, "0")
-    field(HOPR, "5")
+    field(HOPR, "10")
     field(EGUL, "0")
-    field(EGUF, "5")
+    field(EGUF, "10")
     field(DRVL, "0")
-    field(DRVH, "5")
+    field(DRVH, "10")
 }
 
-record(ao, "$(user):PS:MRM")
+record(ao, "G3:PS:wrCurRamp")
 {
-    field(DESC, "Set +0.5V output current")
+    field(DESC, "Set output current")
     field(DTYP, "stream")
     field(OUT,  "@pro.proto setMRM DEV1")
     field(EGU,  "Amps")
     field(LOPR, "0")
-    field(HOPR, "5")
+    field(HOPR, "10")
     field(EGUL, "0")
-    field(EGUF, "5")
+    field(EGUF, "10")
     field(DRVL, "0")
-    field(DRVH, "5")
+    field(DRVH, "10")
 }
 
 
-record(ai, "$(user):PS:MRI")
+record(ai, "G3:PS:rdCur")
 {
     field(DESC, "Get output current")
     field(DTYP, "stream")
@@ -56,7 +60,7 @@ record(ai, "$(user):PS:MRI")
     field(SCAN, "1 second")
 }
 
-record(ai, "$(user):PS:MRSR")
+record(ai, "G3:PS:rdCurSlewRate")
 {
     field(DESC, "Get slew rate")
     field(DTYP, "stream")
@@ -66,7 +70,7 @@ record(ai, "$(user):PS:MRSR")
     field(SCAN, "1 second")
 }
 
-record(ai, "$(user):PS:MRT")
+record(ai, "G3:PS:rdHeatSinkTmp")
 {
     field(DESC, "Get Heatsick temperature")
     field(DTYP, "stream")
@@ -74,9 +78,15 @@ record(ai, "$(user):PS:MRT")
     field(EGU,  "Celsius")
     field(PREC, "3")
     field(SCAN, "1 second")
+
+    #allarms
+    field(HIHI, "45")
+    field(HIGH, "50")
+    field(HSV,  "MINOR")
+    field(HHSV, "MAJOR")
 }
 
-record(ai, "$(user):PS:MRTS")
+record(ai, "G3:PS:rdHeatShuntTmp")
 {
     field(DESC, "Get temperature shunt")
     field(DTYP, "stream")
@@ -84,10 +94,17 @@ record(ai, "$(user):PS:MRTS")
     field(EGU,  "Celsius")
     field(PREC, "3")
     field(SCAN, "1 second")
+
+    #allarm
+    # Limiti di allarme
+    field(HIHI, "45")
+    field(HIGH, "50")
+    field(HSV,  "MINOR")
+    field(HHSV, "MAJOR")
 }
 
 
-record(ai, "$(user):PS:MRV")
+record(ai, "G3:PS:rdVolt")
 {
     field(DESC, "Get temperature shunt")
     field(DTYP, "stream")
@@ -97,19 +114,71 @@ record(ai, "$(user):PS:MRV")
     field(SCAN, "1 second")
 }
 
-record(ao, "$(user):PS:MRM")
+record(ao, "G3:PS:wrSlewRate")
 {
     field(DESC, "Set Slew Rate")
     field(DTYP, "stream")
-    field(OUT,  "@pro.proto setMRM DEV1")
+    field(OUT,  "@pro.proto setMWSR DEV1")
     field(EGU,  "Slew Rate")
 }
 
-record (calcout, "$(user):PS:BOTTON")
+record (calcout, "G3:PS:botton")
 {
     field(DESC, "ON/OFF")
     field(EGU, "BOOL")
-    field(INPA, "$(user):PS:MON.VAL PP NMS")
-    field(INPB, "$(user):PS:MOFF.VAL PP NMS")
+    field(INPA, "G3:PS:cmdPwrOn.VAL CP NMS")
+    field(INPB, "G3:PS:cmdPwrOff.VAL CP NMS")
     field(CALC, "A && (!B)")
 }
+
+
+record(calcout, "G3:PS:done")
+{
+    field(DESC, "DONE")
+    field(EGU,  "BOOL")
+    field(SCAN, "1 second")  
+
+    field(INPA, "$(user):PS:MWI.VAL CP NMS")  # setpoint
+    field(INPB, "$(user):PS:MRI.VAL CP NMS")  # misura
+    field(INPC, "$(user):PS:BOUNDARY.VAL CP NMS")
+
+    field(CALC, "(((A-0.1)<B) && ((A+0.1)>B) && C)?1:0")
+
+    # Se vuoi che DONE scriva il risultato su un PV:
+    field(OUT,  "$(user):PS:DONE.VAL PP")
+    field(DOPT, "Use CALC")
+    field(OOPT, "Every Time")
+
+    # opzionale: calcola anche all’avvio IOC
+    field(PINI, "YES")
+}
+ 
+
+record(calcout, "G3:PS:boundary")
+{
+    field(DESC, "BOUNDARY")
+    field(EGU,  "BOOL")
+    field(SCAN, "1 second")
+    field(INPB, "$(user):PS:MRI.VAL CP NMS")  # misura
+    field(INPC, "$(user):PS:MRV.VAL CP NMS")  # (se ti serve la stessa o un'altra grandezza)
+    field(CALC, "((C>-20 && C<20)&&(B>-10 && B<10))?1:0")
+    # Se vuoi che DONE scriva il risultato su un PV:
+    field(OUT,  "$(user):PS:BOUNDARY.VAL PP")
+    field(DOPT, "Use CALC")
+    field(OOPT, "Every Time")
+    # opzionale: calcola anche all’avvio IOC
+    field(PINI, "YES")
+}
+
+record(bo, "G3:PS:power")
+{
+    field(DESC, "Power OFF/ON (0/1)")
+    field(DTYP, "stream")
+    field(OUT,  "@pro.proto setMPWR DEV1")
+    field(ZNAM, "Off")   # solo etichette per i pannelli
+    field(ONAM, "On")
+    field(SCAN, "Passive")
+}
+
+
+
