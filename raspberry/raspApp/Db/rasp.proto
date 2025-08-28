@@ -5,7 +5,7 @@ Terminator = CR LF;
 # identify the device
 idn {
     out "*IDN?";
-    in "%[^\x0a]";
+    in "%[^\r]";
 }
 
 # magnetic field (gauss)
@@ -18,6 +18,12 @@ readMag {
 readVolt {
     out "VOLT?";
     in "VOLT: %f";
+}
+
+# check sensor status
+checkStatus {
+    out "ENABLE?";
+    in "%[^\x0a]";
 }
 
 # toggle on/off
